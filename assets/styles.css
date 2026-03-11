@@ -1,0 +1,755 @@
+:root {
+  --bg: #f2eadf;
+  --paper: rgba(255, 250, 243, 0.9);
+  --ink: #1f1711;
+  --muted: #66574d;
+  --line: rgba(58, 35, 23, 0.12);
+  --accent: #a23e2d;
+  --shadow: 0 24px 80px rgba(40, 27, 19, 0.12);
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --container: min(1180px, calc(100vw - 40px));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans SC", "Microsoft YaHei UI", "PingFang SC", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 15%, rgba(255, 255, 255, 0.92), transparent 24%),
+    radial-gradient(circle at 92% 18%, rgba(180, 140, 76, 0.12), transparent 22%),
+    linear-gradient(135deg, #efe6d7 0%, #f7f0e7 52%, #ebe0d2 100%);
+  min-height: 100vh;
+}
+
+body.legal-page {
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.page-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), rgba(0, 0, 0, 0.02) calc(100% - 1px)),
+    linear-gradient(transparent 0, transparent calc(100% - 1px), rgba(0, 0, 0, 0.02) calc(100% - 1px));
+  background-size: 36px 36px;
+  opacity: 0.35;
+}
+
+.container {
+  width: var(--container);
+  margin: 0 auto;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(16px);
+  background: rgba(247, 240, 231, 0.72);
+  border-bottom: 1px solid rgba(58, 35, 23, 0.08);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 86px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(162, 62, 45, 0.3);
+  color: var(--accent);
+  background: rgba(255, 250, 243, 0.82);
+  font-family: "STSong", "Songti SC", serif;
+  font-size: 1.3rem;
+}
+
+.brand-copy {
+  display: grid;
+  gap: 4px;
+}
+
+.brand-copy strong {
+  font-size: 1rem;
+}
+
+.brand-copy span,
+.site-nav a,
+.form-status,
+.value-strip p,
+.service-card p,
+.timeline-card p,
+.issue-card p,
+.credential-card p,
+.credential-card li,
+.faq-list p,
+.site-footer p,
+.section-heading p:last-child {
+  color: var(--muted);
+}
+
+.brand-copy span {
+  font-size: 0.88rem;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 0.96rem;
+}
+
+.nav-cta {
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(162, 62, 45, 0.25);
+  color: var(--accent) !important;
+  background: rgba(255, 250, 243, 0.9);
+}
+
+.nav-toggle {
+  display: none;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(255, 250, 243, 0.9);
+  padding: 0;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  margin: 5px auto;
+  background: var(--ink);
+}
+
+.hero {
+  padding: 54px 0 42px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 430px);
+  gap: 34px;
+  align-items: start;
+}
+
+.hero-copy,
+.consult-card,
+.value-strip article,
+.service-card,
+.timeline-card,
+.issue-card,
+.credential-card,
+.legal-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-copy::before,
+.consult-card::before,
+.credential-card::before,
+.legal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 22%),
+    linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), rgba(0, 0, 0, 0.03) calc(100% - 1px));
+  background-size: auto, 22px 22px;
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.hero-copy,
+.consult-card,
+.value-strip article,
+.timeline-card,
+.issue-card,
+.credential-card,
+.legal-card,
+.footer-grid {
+  border: 1px solid rgba(58, 35, 23, 0.08);
+  background: rgba(255, 250, 243, 0.8);
+  box-shadow: var(--shadow);
+}
+
+.hero-copy {
+  padding: 44px;
+  border-radius: var(--radius-xl);
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+  color: var(--accent);
+}
+
+.hero h1,
+.section-heading h2,
+.credential-card h2,
+.legal-shell h1,
+.consult-card-head h2 {
+  margin: 0;
+  font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.hero h1 {
+  font-size: clamp(2.7rem, 5vw, 5rem);
+  max-width: 10ch;
+}
+
+.hero-lead {
+  margin: 22px 0 0;
+  max-width: 46rem;
+  font-size: 1.06rem;
+  line-height: 1.8;
+}
+
+.hero-ribbon,
+.hero-panels,
+.value-strip-grid,
+.service-grid,
+.issue-grid,
+.credential-grid,
+.footer-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-ribbon {
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 28px;
+}
+
+.hero-ribbon div {
+  padding: 16px 18px;
+  background: rgba(255, 250, 243, 0.72);
+  border: 1px solid rgba(58, 35, 23, 0.08);
+  border-radius: 18px;
+}
+
+.ribbon-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.74rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hero-panels {
+  grid-template-columns: 1.1fr 0.9fr;
+  margin-top: 26px;
+}
+
+.mini-panel {
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(25, 19, 15, 0.96);
+  color: #f8f1e8;
+}
+
+.mini-panel.secondary {
+  background: linear-gradient(160deg, rgba(162, 62, 45, 0.95), rgba(126, 38, 29, 0.96));
+}
+
+.mini-tag {
+  display: inline-flex;
+  margin-bottom: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.78rem;
+}
+
+.mini-panel h2,
+.value-strip h2,
+.service-card h3,
+.timeline-card h3,
+.issue-card h3,
+.faq-list summary,
+.legal-card h2 {
+  margin: 0 0 10px;
+  font-family: "Noto Serif SC", "Songti SC", serif;
+}
+
+.mini-panel p,
+.mini-panel li,
+.consult-card-head p:last-child,
+.consult-form input,
+.consult-form select,
+.consult-form textarea,
+.consent span,
+.section-heading p:last-child,
+.timeline-card p,
+.faq-list p,
+.legal-card p {
+  line-height: 1.75;
+}
+
+.mini-panel ul,
+.principles ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.consult-card {
+  position: sticky;
+  top: 108px;
+  padding: 30px;
+  border-radius: var(--radius-xl);
+}
+
+.consult-card::after {
+  content: "已验证执业信息";
+  position: absolute;
+  top: 18px;
+  right: -38px;
+  padding: 8px 46px;
+  background: rgba(162, 62, 45, 0.95);
+  color: #fff7f0;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  transform: rotate(24deg);
+}
+
+.consult-card-head h2 {
+  font-size: 1.85rem;
+  line-height: 1.18;
+}
+
+.consult-card-head p:last-child {
+  margin: 12px 0 0;
+}
+
+.consult-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.consult-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.consult-form span {
+  font-size: 0.92rem;
+}
+
+.consult-form input,
+.consult-form select,
+.consult-form textarea {
+  width: 100%;
+  border: 1px solid rgba(58, 35, 23, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 14px 16px;
+  color: var(--ink);
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.consult-form input:focus,
+.consult-form select:focus,
+.consult-form textarea:focus {
+  outline: none;
+  border-color: rgba(162, 62, 45, 0.55);
+  background: #fffdf8;
+  transform: translateY(-1px);
+}
+
+.consent {
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.consent input {
+  margin-top: 4px;
+}
+
+.consent span {
+  font-size: 0.88rem;
+}
+
+.consent a,
+.back-link {
+  color: var(--accent);
+}
+
+.trap-field {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+.submit-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #a23e2d 0%, #7a261d 100%);
+  color: #fff7f0;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  box-shadow: 0 16px 30px rgba(122, 38, 29, 0.22);
+}
+
+.submit-btn:hover,
+.submit-btn:focus-visible {
+  transform: translateY(-1px);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.submit-btn.ghost {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 180px;
+}
+
+.form-status {
+  min-height: 24px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.value-strip {
+  padding: 0 0 28px;
+}
+
+.value-strip-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.value-strip article,
+.service-card,
+.timeline-card,
+.issue-card,
+.credential-card,
+.footer-grid,
+.legal-card {
+  border-radius: 24px;
+}
+
+.strip-index,
+.timeline-card span {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+}
+
+.value-strip article,
+.service-card,
+.timeline-card,
+.issue-card,
+.credential-card {
+  padding: 26px;
+}
+
+.section {
+  padding: 72px 0;
+}
+
+.section-dark {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(162, 62, 45, 0.12), transparent 20%),
+    linear-gradient(180deg, rgba(23, 17, 13, 0.98), rgba(15, 11, 8, 0.98));
+  color: #f8f1e8;
+}
+
+.section-dark .section-heading h2,
+.section-dark .service-card h3,
+.section-dark .faq-list summary {
+  color: #fff7f0;
+}
+
+.section-dark .section-heading p:last-child,
+.section-dark .service-card p,
+.section-dark .faq-list p {
+  color: rgba(248, 241, 232, 0.76);
+}
+
+.section-accent {
+  background: linear-gradient(180deg, rgba(162, 62, 45, 0.08), transparent);
+}
+
+.section-heading {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.section-heading h2 {
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  max-width: 12ch;
+}
+
+.service-grid,
+.issue-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.service-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.issue-card {
+  background: rgba(255, 250, 243, 0.76);
+}
+
+.pathway-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.sticky-heading,
+.consult-card {
+  position: sticky;
+}
+
+.sticky-heading {
+  top: 112px;
+}
+
+.timeline {
+  display: grid;
+  gap: 18px;
+}
+
+.credential-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.credential-card dl {
+  margin: 22px 0 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.credential-card dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.credential-card dd {
+  margin: 6px 0 0;
+  font-size: 1.05rem;
+}
+
+.principles ul {
+  display: grid;
+  gap: 12px;
+}
+
+.credential-note {
+  padding-top: 18px;
+  border-top: 1px solid rgba(58, 35, 23, 0.08);
+}
+
+.faq-list {
+  display: grid;
+  gap: 14px;
+}
+
+.faq-list details {
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 22px 24px;
+}
+
+.faq-list summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.06rem;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list p {
+  margin-top: 12px;
+}
+
+.site-footer {
+  padding: 28px 0 36px;
+}
+
+.footer-grid {
+  grid-template-columns: 1.1fr 0.8fr 1.1fr;
+  padding: 24px 26px;
+}
+
+.footer-grid div {
+  display: grid;
+  gap: 8px;
+}
+
+.legal-shell {
+  width: min(760px, 100%);
+}
+
+.back-link {
+  display: inline-flex;
+  margin-bottom: 14px;
+}
+
+.legal-shell h1 {
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  margin-bottom: 20px;
+}
+
+.legal-card {
+  padding: 28px;
+}
+
+.legal-card h2 {
+  font-size: 1.1rem;
+}
+
+.legal-card p + h2,
+.legal-actions {
+  margin-top: 18px;
+}
+
+@media (max-width: 1080px) {
+  .hero-grid,
+  .pathway-grid,
+  .credential-grid,
+  .service-grid,
+  .issue-grid,
+  .value-strip-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .consult-card,
+  .sticky-heading {
+    position: relative;
+    top: 0;
+  }
+
+  .section-heading h2,
+  .hero h1 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .header-inner {
+    min-height: 76px;
+  }
+
+  .nav-toggle {
+    display: inline-block;
+  }
+
+  .site-nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 20px;
+    left: 20px;
+    padding: 18px;
+    border-radius: 22px;
+    border: 1px solid rgba(58, 35, 23, 0.08);
+    background: rgba(255, 250, 243, 0.96);
+    box-shadow: var(--shadow);
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .site-nav.is-open {
+    display: flex;
+  }
+
+  .hero-copy,
+  .consult-card,
+  .legal-card {
+    padding: 24px;
+  }
+
+  .hero-ribbon,
+  .hero-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .consult-card::after {
+    right: -52px;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --container: min(100vw - 24px, 1180px);
+  }
+
+  .hero {
+    padding-top: 28px;
+  }
+
+  .hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+}
