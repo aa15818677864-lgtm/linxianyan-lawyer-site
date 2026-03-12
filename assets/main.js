@@ -31,26 +31,26 @@
 
     const endpoint = siteConfig.formEndpoint;
     if (!endpoint || endpoint.indexOf("REPLACE_WITH") !== -1) {
-      statusNode.textContent = "请先在 assets/config.js 里配置 Google Apps Script 地址。";
+      statusNode.textContent = "請先在 assets/config.js 內設定 Google Apps Script 網址。";
       return;
     }
 
     if (!form.reportValidity()) {
-      statusNode.textContent = "请先补齐必填项。";
+      statusNode.textContent = "請先填好必填欄位。";
       return;
     }
 
     const submitButton = form.querySelector('button[type="submit"]');
     const formData = new FormData(form);
     formData.append("lawyer_name", siteConfig.lawyerName || "林先妍");
-    formData.append("site_label", siteConfig.siteLabel || "林先妍律师个人落地页");
+    formData.append("site_label", siteConfig.siteLabel || "林先妍律師個人落地頁");
     formData.append("submitted_from", window.location.href);
 
     try {
       if (submitButton) {
         submitButton.disabled = true;
       }
-      statusNode.textContent = "正在提交，请稍候...";
+      statusNode.textContent = "提交中，請稍候...";
 
       await fetch(endpoint, {
         method: "POST",
@@ -58,12 +58,12 @@
         body: formData
       });
 
-      statusNode.textContent = "提交成功，正在跳转...";
+      statusNode.textContent = "已提交，正在跳轉...";
       window.setTimeout(function () {
         window.location.href = "thanks.html";
       }, 800);
     } catch (error) {
-      statusNode.textContent = "提交失败，请检查网络或稍后再试。";
+      statusNode.textContent = "提交失敗，請稍後再試。";
     } finally {
       if (submitButton) {
         submitButton.disabled = false;
