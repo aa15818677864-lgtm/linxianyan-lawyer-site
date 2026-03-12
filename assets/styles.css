@@ -759,7 +759,7 @@ textarea {
   }
 
   .header-inner {
-    min-height: 82px;
+    min-height: 78px;
   }
 
   .nav-toggle {
@@ -791,22 +791,60 @@ textarea {
   }
 
   .hero-shell {
-    gap: 34px;
-    padding: 56px 0 64px;
+    gap: 30px;
+    padding: 40px 0 56px;
   }
 
   .hero h1 {
-    max-width: none;
-    font-size: clamp(2.5rem, 11vw, 4rem);
+    max-width: 10ch;
+    font-size: clamp(2.2rem, 8.8vw, 3.1rem);
   }
 
   .hero-lead {
-    font-size: 1.04rem;
+    margin-top: 24px;
+    font-size: 1.08rem;
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .submit-btn,
+  .ghost-btn {
+    min-height: 58px;
+    font-size: 1.02rem;
+  }
+
+  .hero-points {
+    gap: 14px;
+    margin-top: 28px;
+  }
+
+  .hero-points li {
+    font-size: 0.98rem;
+    line-height: 1.76;
+  }
+
+  .hero-aside {
+    gap: 14px;
+  }
+
+  .aside-kicker {
+    margin-bottom: 4px;
+  }
+
+  .aside-block {
+    padding: 18px 18px 16px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 28px rgba(63, 44, 35, 0.05);
+  }
+
+  .split-heading,
+  .center-heading {
+    margin-bottom: 36px;
   }
 
   .hero-aside,
@@ -816,29 +854,131 @@ textarea {
     grid-template-columns: 1fr;
   }
 
-  .process-card {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .process-grid {
-    border-top: 0;
+  .split-heading {
+    gap: 16px;
   }
 
   .split-heading h2,
   .center-heading h2,
   .contact-copy h2 {
-    max-width: none;
-    font-size: clamp(2.1rem, 9vw, 3.2rem);
+    max-width: 10ch;
+    font-size: clamp(2rem, 8vw, 2.75rem);
+    line-height: 1.14;
+  }
+
+  .section-intro,
+  .center-heading p,
+  .contact-copy > p {
+    font-size: 1.04rem;
+    line-height: 1.84;
+  }
+
+  .issue-columns {
+    gap: 16px;
+  }
+
+  .issue-card {
+    gap: 16px;
+    padding: 22px 20px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 14px 34px rgba(63, 44, 35, 0.05);
+  }
+
+  .issue-card h3 {
+    font-size: 1.72rem;
+    line-height: 1.26;
+  }
+
+  .issue-card p,
+  .process-card p,
+  .faq-list p {
+    font-size: 1.02rem;
+  }
+
+  .issue-tags {
+    gap: 10px 16px;
+  }
+
+  .issue-tags li {
+    font-size: 0.96rem;
+  }
+
+  .process-card {
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 14px 34px rgba(63, 44, 35, 0.05);
+    padding: 24px 20px;
+  }
+
+  .process-grid {
+    gap: 16px;
+    border-top: 0;
+  }
+
+  .process-card h3 {
+    margin: 18px 0 12px;
+    font-size: 1.7rem;
+  }
+
+  .faq-list details {
+    margin-top: 12px;
+    padding: 0 18px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 24px rgba(63, 44, 35, 0.04);
+  }
+
+  .faq-list details:first-child {
+    margin-top: 0;
+  }
+
+  .faq-list details:last-child {
+    border-bottom: 1px solid var(--line);
   }
 
   .faq-list summary {
-    font-size: 1.22rem;
-    padding: 26px 34px 26px 0;
+    font-size: 1.16rem;
+    padding: 22px 30px 22px 0;
   }
 
   .contact-panel {
-    padding: 26px;
+    order: -1;
+    padding: 24px 20px;
+  }
+
+  .contact-grid {
+    gap: 22px;
+  }
+
+  .contact-copy > p {
+    margin-top: 18px;
+  }
+
+  .contact-meta {
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .identity-card {
+    margin-top: 24px;
+    padding: 22px 20px;
+  }
+
+  .consult-form {
+    gap: 16px;
+  }
+
+  .consult-form input,
+  .consult-form textarea {
+    font-size: 1rem;
+  }
+
+  .footer-grid {
+    gap: 16px;
   }
 }
 
@@ -861,23 +1001,37 @@ textarea {
   .brand-copy span {
     letter-spacing: 0.08em;
     font-size: 0.84rem;
+    line-height: 1.35;
   }
 
   .section {
-    padding: 76px 0;
+    padding: 68px 0;
   }
 
   .hero-rule {
-    margin: 24px 0 20px;
+    margin: 20px 0 18px;
+  }
+
+  .hero h1 {
+    font-size: 2.28rem;
+  }
+
+  .hero-lead {
+    font-size: 1.04rem;
   }
 
   .split-heading,
   .center-heading {
-    margin-bottom: 42px;
+    margin-bottom: 30px;
   }
 
   .issue-card h3,
   .process-card h3 {
-    font-size: 1.65rem;
+    font-size: 1.54rem;
+  }
+
+  .contact-copy h2 {
+    max-width: 9ch;
+    font-size: 2.18rem;
   }
 }
