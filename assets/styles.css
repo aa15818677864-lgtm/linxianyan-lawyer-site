@@ -311,7 +311,12 @@ textarea {
   font-size: 1.15rem;
   font-weight: 600;
   letter-spacing: 0.14em;
-  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
 }
 
 .submit-btn:hover,
@@ -329,6 +334,12 @@ textarea {
   cursor: pointer;
 }
 
+.submit-btn:hover,
+.submit-btn:focus-visible {
+  background: #2f2525;
+  box-shadow: 0 20px 38px rgba(47, 37, 37, 0.24);
+}
+
 .submit-btn:disabled {
   opacity: 0.74;
   cursor: wait;
@@ -340,6 +351,16 @@ textarea {
   background: transparent;
   color: var(--ink);
   box-shadow: none;
+}
+
+.ghost-btn:hover,
+.ghost-btn:focus-visible,
+.submit-btn.ghost:hover,
+.submit-btn.ghost:focus-visible {
+  background: var(--accent-deep);
+  color: #faf7f3;
+  border-color: transparent;
+  box-shadow: 0 18px 36px rgba(67, 52, 52, 0.18);
 }
 
 .hero-points {
@@ -602,6 +623,11 @@ textarea {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.72);
   box-shadow: var(--shadow-soft);
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
 }
 
 .process-card h3 {
@@ -641,6 +667,11 @@ textarea {
 .faq-list details {
   border-radius: 22px;
   padding: 0 18px;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
 }
 
 .faq-list summary {
@@ -673,6 +704,12 @@ textarea {
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .faq-list details[open] summary::after {
@@ -758,7 +795,7 @@ textarea {
 }
 
 .contact-panel {
-  order: -1;
+  order: 1;
   padding: 24px 20px;
   border-radius: 28px;
 }
@@ -773,7 +810,13 @@ textarea {
   gap: 10px;
 }
 
-.consult-form label > span,
+.consult-form label > span {
+  color: rgba(59, 47, 47, 0.84);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
 .consent span {
   color: rgba(59, 47, 47, 0.64);
   font-size: 0.98rem;
@@ -895,8 +938,10 @@ textarea {
 }
 
 .footer-nav {
-  display: grid;
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
 }
 
 .footer-grid strong {
@@ -910,9 +955,46 @@ textarea {
   color: rgba(59, 47, 47, 0.72);
 }
 
+.footer-note {
+  justify-self: start;
+}
+
 .footer-grid p {
   margin: 0;
   font-size: 0.95rem;
+}
+
+.footer-note p {
+  color: rgba(59, 47, 47, 0.52);
+  letter-spacing: 0.04em;
+}
+
+.reveal-item {
+  opacity: 1;
+  transform: none;
+}
+
+body.reveal-enabled .reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity;
+}
+
+body.reveal-enabled .reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-item[data-reveal-kind="cards"] {
+  transition-duration: 700ms, 700ms;
+}
+
+.reveal-item[data-reveal-kind="copy"] {
+  transition-duration: 560ms, 560ms;
 }
 
 .privacy-modal {
@@ -1259,11 +1341,70 @@ textarea {
     padding: 24px 22px;
   }
 
+  .process-card:hover .process-body,
+  .process-card:focus-within .process-body {
+    transform: translateY(-5px);
+    border-color: rgba(200, 75, 49, 0.18);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 20px 38px rgba(59, 47, 47, 0.1);
+  }
+
+  .process-card:hover .process-step,
+  .process-card:focus-within .process-step {
+    background: #2f2525;
+    box-shadow: 0 18px 34px rgba(47, 37, 37, 0.18);
+  }
+
   .faq-list {
     gap: 14px;
   }
 
+  .faq-list details:hover,
+  .faq-list details:focus-within {
+    transform: translateY(-4px);
+    border-color: rgba(200, 75, 49, 0.18);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 18px 34px rgba(59, 47, 47, 0.09);
+  }
+
+  .faq-list details:hover summary,
+  .faq-list details:focus-within summary {
+    color: var(--accent-deep);
+  }
+
+  .faq-list details:hover summary::after,
+  .faq-list details:focus-within summary::after {
+    transform: translateY(-50%) scale(1.06);
+    background: var(--accent-deep);
+    color: #faf7f3;
+    border-color: transparent;
+    box-shadow: 0 12px 24px rgba(67, 52, 52, 0.18);
+  }
+
   .contact-summary {
     gap: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .submit-btn,
+  .ghost-btn,
+  .issue-card,
+  .process-body,
+  .faq-list details,
+  .faq-list summary::after,
+  .reveal-item {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  body.reveal-enabled .reveal-item,
+  body.reveal-enabled .reveal-item.is-visible {
+    opacity: 1;
   }
 }

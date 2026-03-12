@@ -7,6 +7,12 @@
   const privacyModal = document.getElementById("privacy-modal");
   const privacyOpeners = document.querySelectorAll("[data-open-privacy]");
   const privacyClosers = document.querySelectorAll("[data-close-privacy]");
+  const phoneRegionField = form ? form.elements.namedItem("contact_region") : null;
+  const phoneField = form ? form.elements.namedItem("contact_phone") : null;
+  const phoneLengths = {
+    "+852": 8,
+    "+86": 11
+  };
 
   if (navToggle && siteNav) {
     navToggle.addEventListener("click", function () {
@@ -57,10 +63,13 @@
   }
 
   if (!form || !statusNode) {
+    setupRevealAnimations();
     return;
   }
 
   hydrateHiddenFields(form);
+  setupPhoneValidation();
+  setupRevealAnimations();
 
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -72,7 +81,7 @@
       return;
     }
 
-    if (!form.reportValidity()) {
+    if (!validatePhoneField() || !form.reportValidity()) {
       statusNode.textContent = "請先填好必填欄位。";
       return;
     }
@@ -150,6 +159,124 @@
     }
 
     return String(field.value || "").trim();
+  }
+
+  function setupPhoneValidation() {
+    if (!(phoneRegionField instanceof HTMLSelectElement) || !(phoneField instanceof HTMLInputElement)) {
+      return;
+    }
+
+    syncPhoneRule();
+    validatePhoneField();
+
+    phoneRegionField.addEventListener("change", function () {
+      syncPhoneRule();
+      phoneField.value = phoneField.value.replace(/\D+/g, "").slice(0, getExpectedPhoneLength());
+      validatePhoneField();
+    });
+
+    phoneField.addEventListener("input", function () {
+      const expectedLength = getExpectedPhoneLength();
+      phoneField.value = phoneField.value.replace(/\D+/g, "").slice(0, expectedLength);
+      validatePhoneField();
+    });
+
+    phoneField.addEventListener("blur", validatePhoneField);
+  }
+
+  function syncPhoneRule() {
+    if (!(phoneRegionField instanceof HTMLSelectElement) || !(phoneField instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const expectedLength = getExpectedPhoneLength();
+    phoneField.maxLength = expectedLength;
+    phoneField.placeholder = expectedLength === 8 ? "00000000" : "00000000000";
+    phoneField.setAttribute("aria-label", phoneRegionField.value === "+852" ? "香港電話號碼" : "內地電話號碼");
+  }
+
+  function getExpectedPhoneLength() {
+    if (!(phoneRegionField instanceof HTMLSelectElement)) {
+      return 8;
+    }
+
+    return phoneLengths[phoneRegionField.value] || 8;
+  }
+
+  function validatePhoneField() {
+    if (!(phoneRegionField instanceof HTMLSelectElement) || !(phoneField instanceof HTMLInputElement)) {
+      return true;
+    }
+
+    const digits = phoneField.value.replace(/\D+/g, "");
+    const expectedLength = getExpectedPhoneLength();
+    let message = "";
+
+    if (!digits) {
+      message = "請填寫電話號碼。";
+    } else if (digits.length !== expectedLength) {
+      message = phoneRegionField.value === "+852"
+        ? "香港電話請填寫 8 位數字。"
+        : "內地電話請填寫 11 位數字。";
+    }
+
+    phoneField.setCustomValidity(message);
+    return message === "";
+  }
+
+  function setupRevealAnimations() {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const targets = Array.from(document.querySelectorAll([
+      ".hero-copy",
+      ".hero-aside",
+      ".section-heading",
+      ".issue-card",
+      ".process-card",
+      ".faq-list details",
+      ".contact-copy",
+      ".contact-panel",
+      ".footer-grid > div"
+    ].join(",")));
+
+    if (!targets.length) {
+      return;
+    }
+
+    if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+      targets.forEach(function (element) {
+        element.classList.add("is-visible");
+      });
+      return;
+    }
+
+    targets.forEach(function (element, index) {
+      element.classList.add("reveal-item");
+      element.dataset.revealKind = element.matches(".issue-card, .process-card, .faq-list details") ? "cards" : "copy";
+      element.style.setProperty("--reveal-delay", String((index % 4) * 70) + "ms");
+      if (element.getBoundingClientRect().top < window.innerHeight * 0.9) {
+        element.classList.add("is-visible");
+      }
+    });
+
+    document.body.classList.add("reveal-enabled");
+
+    const observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.14,
+      rootMargin: "0px 0px -10% 0px"
+    });
+
+    targets.forEach(function (element) {
+      if (!element.classList.contains("is-visible")) {
+        observer.observe(element);
+      }
+    });
   }
 
   function closePrivacyModal() {
