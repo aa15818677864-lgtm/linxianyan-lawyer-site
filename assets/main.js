@@ -9,6 +9,7 @@
   const privacyClosers = document.querySelectorAll("[data-close-privacy]");
   const phoneRegionField = form ? form.elements.namedItem("contact_region") : null;
   const phoneField = form ? form.elements.namedItem("contact_phone") : null;
+  let clientIpPromise = null;
   const phoneLengths = {
     "+852": 8,
     "+86": 11
@@ -68,6 +69,7 @@
   }
 
   hydrateHiddenFields(form);
+  preloadClientIp(form);
   setupPhoneValidation();
   setupRevealAnimations();
 
@@ -87,6 +89,7 @@
     }
 
     const submitButton = form.querySelector('button[type="submit"]');
+    await ensureClientIp(form);
     const formData = new FormData(form);
     const contactRegion = getFieldValue(form, "contact_region") || "+852";
     const contactPhone = getFieldValue(form, "contact_phone");
@@ -143,6 +146,43 @@
     setValue(currentForm, "utm_campaign", url.searchParams.get("utm_campaign") || "");
     setValue(currentForm, "utm_term", url.searchParams.get("utm_term") || "");
     setValue(currentForm, "utm_content", url.searchParams.get("utm_content") || "");
+  }
+
+  function preloadClientIp(currentForm) {
+    ensureClientIp(currentForm).catch(function () {
+      return "";
+    });
+  }
+
+  async function ensureClientIp(currentForm) {
+    const existingIp = getFieldValue(currentForm, "client_ip");
+    if (existingIp) {
+      return existingIp;
+    }
+
+    if (!clientIpPromise) {
+      clientIpPromise = fetch("https://api64.ipify.org?format=json", {
+        cache: "no-store"
+      })
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Unable to fetch client IP");
+          }
+          return response.json();
+        })
+        .then(function (data) {
+          return data && data.ip ? String(data.ip).trim() : "";
+        })
+        .catch(function () {
+          return "";
+        });
+    }
+
+    const ip = await clientIpPromise;
+    if (ip) {
+      setValue(currentForm, "client_ip", ip);
+    }
+    return ip;
   }
 
   function setValue(currentForm, name, value) {
