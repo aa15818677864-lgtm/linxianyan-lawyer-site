@@ -829,6 +829,13 @@ textarea {
   gap: 10px;
 }
 
+.field-error {
+  margin: 4px 4px 0;
+  color: var(--accent);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .consult-form input,
 .consult-form select,
 .consult-form textarea {
@@ -855,6 +862,14 @@ textarea {
   border-color: rgba(200, 75, 49, 0.26);
   background: #fff;
   box-shadow: 0 0 0 4px rgba(200, 75, 49, 0.06);
+}
+
+.consult-form input.is-invalid,
+.consult-form select.is-invalid,
+.consult-form textarea.is-invalid {
+  border-color: rgba(200, 75, 49, 0.52);
+  background: rgba(255, 248, 246, 0.96);
+  box-shadow: 0 0 0 4px rgba(200, 75, 49, 0.08);
 }
 
 .consult-form select {

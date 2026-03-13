@@ -9,6 +9,7 @@
   const privacyClosers = document.querySelectorAll("[data-close-privacy]");
   const phoneRegionField = form ? form.elements.namedItem("contact_region") : null;
   const phoneField = form ? form.elements.namedItem("contact_phone") : null;
+  const phoneErrorNode = document.getElementById("phone-error");
   let clientIpPromise = null;
   const phoneLengths = {
     "+852": 8,
@@ -83,33 +84,18 @@
       return;
     }
 
-    if (!validatePhoneField() || !form.reportValidity()) {
-      statusNode.textContent = "請先填好必填欄位。";
+    const phoneValid = validatePhoneField();
+    const formValid = form.reportValidity();
+
+    if (!phoneValid || !formValid) {
       return;
     }
 
     const submitButton = form.querySelector('button[type="submit"]');
     await ensureClientIp(form);
     const formData = new FormData(form);
-    const contactRegion = getFieldValue(form, "contact_region") || "+852";
-    const contactPhone = getFieldValue(form, "contact_phone");
-    const contactIm = getFieldValue(form, "contact_im");
     const summary = getFieldValue(form, "summary");
-    const composedSummaryParts = [];
-
-    if (summary) {
-      composedSummaryParts.push(summary);
-    }
-
-    if (contactIm) {
-      composedSummaryParts.push("補充聯絡方式：" + contactIm);
-    }
-
-    formData.set("contact", [contactRegion, contactPhone].filter(Boolean).join(" ").trim());
-    formData.set("summary", composedSummaryParts.join("\n") || "未填寫個案簡述");
-    formData.append("lawyer_name", siteConfig.lawyerName || "林先妍");
-    formData.append("site_label", siteConfig.siteLabel || "林先妍律師個人落地頁");
-    formData.append("submitted_from", window.location.href);
+    formData.set("summary", summary);
 
     try {
       if (submitButton) {
@@ -256,11 +242,19 @@
       message = "請填寫電話號碼。";
     } else if (digits.length !== expectedLength) {
       message = phoneRegionField.value === "+852"
-        ? "香港電話請填寫 8 位數字。"
-        : "內地電話請填寫 11 位數字。";
+        ? "香港電話請填寫 8 位數字"
+        : "內地電話請填寫 11 位數字";
     }
 
     phoneField.setCustomValidity(message);
+    phoneField.classList.toggle("is-invalid", Boolean(message));
+    phoneField.setAttribute("aria-invalid", message ? "true" : "false");
+
+    if (phoneErrorNode) {
+      phoneErrorNode.textContent = message;
+      phoneErrorNode.hidden = !message;
+    }
+
     return message === "";
   }
 
