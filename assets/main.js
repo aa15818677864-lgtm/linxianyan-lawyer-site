@@ -10,7 +10,10 @@
   const phoneRegionField = form ? form.elements.namedItem("contact_region") : null;
   const phoneField = form ? form.elements.namedItem("contact_phone") : null;
   const phoneErrorNode = document.getElementById("phone-error");
+
   let clientIpPromise = null;
+  let phoneTouched = false;
+
   const phoneLengths = {
     "+852": 8,
     "+86": 11
@@ -80,10 +83,11 @@
 
     const endpoint = siteConfig.formEndpoint;
     if (!endpoint || endpoint.indexOf("REPLACE_WITH") !== -1) {
-      statusNode.textContent = "請先在 assets/config.js 內設定 Google Apps Script 網址。";
+      statusNode.textContent = "請先在 assets/config.js 填入 Google Apps Script 網址。";
       return;
     }
 
+    phoneTouched = true;
     const phoneValid = validatePhoneField();
     const formValid = form.reportValidity();
 
@@ -101,7 +105,8 @@
       if (submitButton) {
         submitButton.disabled = true;
       }
-      statusNode.textContent = "提交中，請稍候...";
+
+      statusNode.textContent = "提交中，請稍候…";
 
       await fetch(endpoint, {
         method: "POST",
@@ -109,7 +114,7 @@
         body: formData
       });
 
-      statusNode.textContent = "已提交，正在跳轉...";
+      statusNode.textContent = "已提交，正在跳轉…";
       window.setTimeout(function () {
         window.location.href = "thanks.html";
       }, 800);
@@ -193,21 +198,26 @@
     }
 
     syncPhoneRule();
-    validatePhoneField();
+    clearPhoneValidation();
 
     phoneRegionField.addEventListener("change", function () {
+      phoneTouched = true;
       syncPhoneRule();
       phoneField.value = phoneField.value.replace(/\D+/g, "").slice(0, getExpectedPhoneLength());
       validatePhoneField();
     });
 
     phoneField.addEventListener("input", function () {
+      phoneTouched = true;
       const expectedLength = getExpectedPhoneLength();
       phoneField.value = phoneField.value.replace(/\D+/g, "").slice(0, expectedLength);
       validatePhoneField();
     });
 
-    phoneField.addEventListener("blur", validatePhoneField);
+    phoneField.addEventListener("blur", function () {
+      phoneTouched = true;
+      validatePhoneField();
+    });
   }
 
   function syncPhoneRule() {
@@ -238,12 +248,17 @@
     const expectedLength = getExpectedPhoneLength();
     let message = "";
 
+    if (!digits && !phoneTouched) {
+      clearPhoneValidation();
+      return true;
+    }
+
     if (!digits) {
       message = "請填寫電話號碼。";
     } else if (digits.length !== expectedLength) {
       message = phoneRegionField.value === "+852"
-        ? "香港電話請填寫 8 位數字"
-        : "內地電話請填寫 11 位數字";
+        ? "香港電話請填寫 8 位數字。"
+        : "內地電話請填寫 11 位數字。";
     }
 
     phoneField.setCustomValidity(message);
@@ -256,6 +271,21 @@
     }
 
     return message === "";
+  }
+
+  function clearPhoneValidation() {
+    if (!(phoneField instanceof HTMLInputElement)) {
+      return;
+    }
+
+    phoneField.setCustomValidity("");
+    phoneField.classList.remove("is-invalid");
+    phoneField.setAttribute("aria-invalid", "false");
+
+    if (phoneErrorNode) {
+      phoneErrorNode.textContent = "";
+      phoneErrorNode.hidden = true;
+    }
   }
 
   function setupRevealAnimations() {
