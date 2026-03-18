@@ -1702,6 +1702,26 @@ body.reveal-enabled .reveal-item.is-visible {
     padding: 76px 0;
   }
 
+  .hero-aside {
+    gap: 16px;
+  }
+
+  .hero-aside::before {
+    inset: 54px -8px -14px 28px;
+  }
+
+  .aside-kicker {
+    margin-bottom: 6px;
+    padding-left: 0;
+    color: var(--ink);
+    font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.22;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+
   .process-list::before {
     left: 20px;
   }
