@@ -298,8 +298,7 @@
       ".process-card",
       ".faq-list details",
       ".contact-copy",
-      ".contact-panel",
-      ".footer-grid > div"
+      ".contact-panel"
     ].join(",")));
 
     if (!targets.length) {
