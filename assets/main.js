@@ -10,6 +10,8 @@
   const phoneRegionField = form ? form.elements.namedItem("contact_region") : null;
   const phoneField = form ? form.elements.namedItem("contact_phone") : null;
   const phoneErrorNode = document.getElementById("phone-error");
+  const submitButton = form ? form.querySelector('button[type="submit"]') : null;
+  const defaultSubmitLabel = submitButton ? submitButton.textContent.trim() : "";
 
   let clientIpPromise = null;
   let phoneTouched = false;
@@ -79,11 +81,11 @@
 
   form.addEventListener("submit", async function (event) {
     event.preventDefault();
-    statusNode.textContent = "";
+    setFormStatus("", "");
 
     const endpoint = siteConfig.formEndpoint;
     if (!endpoint || endpoint.indexOf("REPLACE_WITH") !== -1) {
-      statusNode.textContent = "請先在 assets/config.js 填入 Google Apps Script 網址。";
+      setFormStatus("請先在 assets/config.js 填入 Google Apps Script 網址。", "error");
       return;
     }
 
@@ -95,18 +97,15 @@
       return;
     }
 
-    const submitButton = form.querySelector('button[type="submit"]');
     await ensureClientIp(form);
     const formData = new FormData(form);
     const summary = getFieldValue(form, "summary");
     formData.set("summary", summary);
+    let submittedSuccessfully = false;
 
     try {
-      if (submitButton) {
-        submitButton.disabled = true;
-      }
-
-      statusNode.textContent = "提交中，請稍候…";
+      setSubmitState(true);
+      setFormStatus("正在安全提交資料，通常需時數秒。", "loading");
 
       await fetch(endpoint, {
         method: "POST",
@@ -114,18 +113,40 @@
         body: formData
       });
 
-      statusNode.textContent = "已提交，正在跳轉…";
+      submittedSuccessfully = true;
+      setFormStatus("資料已送出，正在為你跳轉。", "success");
       window.setTimeout(function () {
         window.location.href = "thanks.html";
-      }, 800);
+      }, 900);
     } catch (error) {
-      statusNode.textContent = "提交失敗，請稍後再試。";
+      setFormStatus("提交失敗，請稍後再試。", "error");
     } finally {
-      if (submitButton) {
-        submitButton.disabled = false;
+      if (!submittedSuccessfully) {
+        setSubmitState(false);
       }
     }
   });
+
+  function setSubmitState(isLoading) {
+    if (!submitButton) {
+      return;
+    }
+
+    submitButton.disabled = isLoading;
+    submitButton.classList.toggle("is-loading", isLoading);
+    submitButton.textContent = isLoading ? "提交中" : defaultSubmitLabel;
+    form.setAttribute("aria-busy", isLoading ? "true" : "false");
+  }
+
+  function setFormStatus(message, state) {
+    statusNode.textContent = message;
+    if (state) {
+      statusNode.dataset.state = state;
+    } else {
+      delete statusNode.dataset.state;
+    }
+    statusNode.classList.toggle("is-loading", state === "loading");
+  }
 
   function hydrateHiddenFields(currentForm) {
     const url = new URL(window.location.href);
