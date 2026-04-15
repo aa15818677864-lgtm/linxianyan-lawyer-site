@@ -428,6 +428,32 @@ select {
   box-shadow: 0 14px 28px rgba(26, 20, 18, 0.08);
 }
 
+.hero-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: rgba(26, 20, 18, 0.72);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.hero-text-link::after {
+  content: "→";
+  transition: transform 180ms ease;
+}
+
+.hero-text-link:hover,
+.hero-text-link:focus-visible {
+  color: var(--ink);
+}
+
+.hero-text-link:hover::after,
+.hero-text-link:focus-visible::after {
+  transform: translateX(2px);
+}
+
 .hero-points {
   display: flex;
   flex-wrap: wrap;
@@ -1597,7 +1623,8 @@ body.reveal-enabled .reveal-item.is-visible {
   }
 
   .hero-actions {
-    grid-template-columns: repeat(2, minmax(0, 250px));
+    grid-template-columns: minmax(0, 250px) auto;
+    align-items: center;
   }
 
   .hero-trust {
@@ -1905,7 +1932,8 @@ body.reveal-enabled .reveal-item.is-visible {
   .reveal-item,
   .aside-block,
   .summary-item,
-  .nav-cta {
+  .nav-cta,
+  .hero-text-link::after {
     transition: none !important;
     transform: none !important;
     animation: none !important;
