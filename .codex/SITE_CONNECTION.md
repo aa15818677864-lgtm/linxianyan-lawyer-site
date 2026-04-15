@@ -7,7 +7,7 @@ This project is the source folder for the website domain below:
 - Domain: `www.lvshisz.com`
 - GitHub repository: `https://github.com/aa15818677864-lgtm/linxianyan-lawyer-site`
 - Default branch: `main`
-- Verified remote commit: `ee1043a604be99486db45b41cffc03498ca95130`
+- Verified remote commit: `c7a229dd6519fab4cdcd5c9ad6faac02263304d5`
 
 Quick checks:
 
