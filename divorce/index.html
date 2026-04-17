@@ -279,16 +279,6 @@
 
           <aside class="contact-panel">
             <form class="consult-form" id="consult-form" novalidate>
-              <div class="contact-checklist" aria-label="最低可提交資料">
-                <p class="contact-checklist-title">最少可先提供：</p>
-                <ul class="contact-points">
-                  <li>雙方所在地</li>
-                  <li>結婚地／婚姻狀況</li>
-                  <li>主要財產</li>
-                  <li>聯絡電話</li>
-                </ul>
-              </div>
-
               <div class="form-row">
                 <label class="field-half">
                   <span>點稱呼你（必填）</span>
@@ -317,13 +307,17 @@
               </div>
 
               <label>
-                <span>你而家知道咗啲咩／最想問邊部分（選填）</span>
-                <p class="field-tip">最少可填：雙方所在地／結婚地／主要財產／最大分歧。</p>
+                <span>WhatsApp / 微信（選填）</span>
+                <input name="social_contact" type="text" maxlength="60" placeholder="例如：WhatsApp 號碼 / 微信 ID">
+              </label>
+
+              <label>
+                <span>你而家最想先問清楚咩（選填）</span>
                 <textarea
                   name="summary"
                   rows="4"
                   maxlength="500"
-                  placeholder="例如：一方喺香港、一方喺深圳；喺香港結婚；有深圳房產、存款；而家主要爭議係點分。"
+                  placeholder="例如：應走協議定訴訟、內地房產點分、存款點樣計、而家主要分歧係邊部分。"
                 ></textarea>
               </label>
 
@@ -351,7 +345,7 @@
               <input type="hidden" name="utm_term">
               <input type="hidden" name="utm_content">
 
-              <button class="submit-btn form-submit" type="submit">提交已知資料，先釐清方向</button>
+              <button class="submit-btn form-submit" type="submit">提交資料，先作初評</button>
               <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
             </form>
           </aside>
