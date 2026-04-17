@@ -1781,7 +1781,10 @@ body.reveal-enabled .reveal-item.is-visible {
   }
 
   .nav-link:hover,
-  .nav-link:focus-visible,
+  .nav-link:focus-visible {
+    color: var(--accent-deep);
+  }
+
   .footer-grid a:hover,
   .footer-grid a:focus-visible,
   .footer-inline-link:hover,
