@@ -1906,6 +1906,10 @@ body.reveal-enabled .reveal-item.is-visible {
     gap: 28px;
   }
 
+  .contact-summary {
+    display: none;
+  }
+
   .hero-trust {
     gap: 8px;
   }
