@@ -1773,6 +1773,10 @@ body.reveal-enabled .reveal-item.is-visible {
   .contact-shell {
     gap: 28px;
   }
+
+  .contact-summary {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
