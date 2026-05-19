@@ -1374,6 +1374,18 @@ select {
   line-height: 1.72;
 }
 
+.footer-email {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-email:hover,
+.footer-email:focus-visible {
+  color: #ebc5ba;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .footer-grid > .footer-nav {
   display: flex;
   flex-wrap: wrap;
